@@ -8,11 +8,11 @@ elixir((mix) => {
 
     mix.sass('app.scss');
 
-    mix.scripts([
+    mix.styles([
         './node_modules/font-awesome/css/font-awesome.css'
     ], 'public/css/vendor.css');
 
-    mix.styles([
+    mix.scripts([
         './node_modules/jquery/dist/js/jquery.js',
         './node_modules/bootstrap/dist/js/bootstrap.js'
     ], 'public/js/vendor.js');
