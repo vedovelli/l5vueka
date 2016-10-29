@@ -2,8 +2,12 @@
 <script>
     import moment from 'moment'
     import bus from '../utils/events/bus'
+    import VdUserAddresses from './addresses.vue'
     export default {
         props: ['list'],
+        components: {
+            VdUserAddresses
+        },
         data () {
             return {
                 details: [],
@@ -13,6 +17,9 @@
             users () {
                 return JSON.parse(this.list)
             },
+            hasUsers () {
+                return this.users.length > 0
+            },
         },
         methods: {
             toggle (id) {
@@ -20,6 +27,7 @@
                     this.toggleAll()
                 } else {
                     this.toggleOne(id)
+                    bus.$emit('get-addresses', { userId: id })
                 }
             },
             toggleAll () {
@@ -43,14 +51,22 @@
             edit (user) {
                 bus.$emit('open-form', { user: user })
             },
-            remove (id) {},
+            remove (id) {
+                const confirm = window.confirm('Tem certeza?!')
+                if (confirm) {
+                    window.location = `usuarios/remover/${id}`
+                }
+            },
         },
     }
 </script>
 
 <template>
     <div>
-        <table class="table table-bordered table-striped">
+        <h4 v-show="!hasUsers">
+            Ainda não há usuários cadastrados!
+        </h4>
+        <table class="table table-bordered table-striped" v-show="hasUsers">
             <thead>
                 <tr>
                     <th class="text-center">
@@ -86,7 +102,13 @@
                     </td>
                 </tr>
                 <tr v-show="details.includes(user.id)">
-                    <td colspan="5">placeholder para endereço</td>
+                    <td colspan="5">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <vd-user-addresses></vd-user-addresses>
+                            </div>
+                        </div>
+                    </td>
                 </tr>
             </tbody>
         </table>
@@ -94,6 +116,13 @@
 </template>
 
 <style>
+    .address {
+        padding: 10px;
+        background-color: lightsteelblue;
+        border-radius: 6px;
+        border: #999 1px solid;
+        margin-bottom: 10px;
+    }
     .red {
         color: red;
     }

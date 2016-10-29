@@ -5,6 +5,7 @@
         props: ['token'],
         data () {
             return {
+                isEditing: false,
                 user: {
                     id: 0,
                     name: '',
@@ -14,9 +15,6 @@
             }
         },
         computed: {
-            isEditing () {
-                return this.user.name !== ''
-            },
             action () {
                 if (this.isEditing) {
                     return `/usuarios/atualizar/${this.user.id}`
@@ -30,6 +28,7 @@
             bus.$on('open-form', (obj) => {
                 if (obj !== undefined) {
                     this.user = obj.user
+                    this.isEditing = true
                 }
                 modal.modal('show')
             })

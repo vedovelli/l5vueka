@@ -20,6 +20,7 @@
   },
   "dependencies": {
     "laravel-elixir-browsersync-official": "^1.0.0",
-    "moment": "^2.15.2"
+    "moment": "^2.15.2",
+    "vue-resource": "^1.0.3"
   }
 }

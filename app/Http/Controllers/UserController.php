@@ -46,9 +46,13 @@ class UserController extends Controller
             ->with('success', 'Usuário atualizado com sucesso!');
     }
 
-    public function remove()
+    public function remove($id)
     {
-
+        $user = User::find($id);
+        $user->delete();
+        return redirect()
+            ->route('users.index')
+            ->with('success', 'Usuário atualizado com sucesso!');
     }
 
 }

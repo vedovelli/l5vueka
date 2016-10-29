@@ -4,6 +4,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::group(['prefix' => 'api'], function () {
+    Route::get('endereco/{userId}', ['uses' => 'ApiController@address']);
+});
+
 Route::group(['prefix' => 'usuarios'], function () {
     Route::get('', ['as' => 'users.index', 'uses' => 'UserController@index']);
     Route::post('criar', ['as' => 'users.create', 'uses' => 'UserController@create']);
