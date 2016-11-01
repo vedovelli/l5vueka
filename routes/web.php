@@ -5,7 +5,7 @@ Route::get('/', function () {
 });
 
 Route::group(['prefix' => 'api'], function () {
-    Route::get('endereco/{userId}', ['uses' => 'ApiController@address']);
+    Route::get('endereco/{userid}', ['uses' => 'ApiController@address']);
 });
 
 Route::group(['prefix' => 'usuarios'], function () {

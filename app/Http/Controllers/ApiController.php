@@ -9,10 +9,11 @@ use App\User;
 
 class ApiController extends Controller
 {
-    public function address($userId)
+    public function address($userid)
     {
-        $user = User::find($userId);
+        $user = User::find($userid);
         $addresses = $user->addresses;
+        sleep(2);
         return response()->json(['addresses' => $addresses], 200);
     }
 }
