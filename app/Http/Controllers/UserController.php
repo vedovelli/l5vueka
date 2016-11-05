@@ -12,7 +12,8 @@ class UserController extends Controller
     public function index()
     {
         $users = User::all();
-        return view('users.index')->with(compact('users'));
+        // return view('users.index')->with(compact('users'));
+        return response()->json(compact('users'), 200);
     }
 
     public function create()
@@ -23,9 +24,12 @@ class UserController extends Controller
         $user->email = $input['email'];
         $user->password = bcrypt($input['password']);
         $user->save();
-        return redirect()
-            ->route('users.index')
-            ->with('success', 'Usuário cadastrado com sucesso!');
+        $returnData = ['message' => 'Usuário cadastrado com sucesso',
+            'user' => $user];
+        return response()->json($returnData, 200);
+        // return redirect()
+        //     ->route('users.index')
+        //     ->with('success', 'Usuário cadastrado com sucesso!');
     }
 
     public function update($id)
