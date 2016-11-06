@@ -3,14 +3,15 @@
 use Illuminate\Http\Request;
 
 
-Route::group(['middleware' => ['cors', 'api']], function () {
-    Route::post('login', ['uses' => 'LoginController@login']);
+Route::post('login', ['uses' => 'LoginController@login'])->middleware(['cors', 'api']);
+Route::group(['middleware' => ['cors', 'api', 'jwt-auth']], function () {
     Route::get('endereco/{userid}', ['uses' => 'ApiController@address']);
     Route::group(['prefix' => 'usuarios'], function () {
         Route::get('', ['as' => 'users.index', 'uses' => 'UserController@index']);
+        Route::get('{id}', ['as' => 'users.get', 'uses' => 'UserController@get']);
         Route::post('criar', ['as' => 'users.create', 'uses' => 'UserController@create']);
         Route::post('atualizar/{id}', ['as' => 'users.update', 'uses' => 'UserController@update']);
-        Route::get('remover/{id}', ['as' => 'users.remove', 'uses' => 'UserController@remove']);
+        Route::delete('remover/{id}', ['as' => 'users.remove', 'uses' => 'UserController@remove']);
     });
 });
 

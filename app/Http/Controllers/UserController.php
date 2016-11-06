@@ -16,6 +16,12 @@ class UserController extends Controller
         return response()->json(compact('users'), 200);
     }
 
+    public function get($id)
+    {
+        $user = User::find($id);
+        return response()->json(compact('user'), 200);
+    }
+
     public function create()
     {
         $input = \Request::only('name', 'email', 'password');
@@ -45,18 +51,26 @@ class UserController extends Controller
 
         $user->save();
 
-        return redirect()
-            ->route('users.index')
-            ->with('success', 'Usuário atualizado com sucesso!');
+        $returnData = ['message' => 'Usuário atualizado com sucesso',
+            'user' => $user];
+
+        return response()->json($returnData, 200);
+
+        // return redirect()
+        //     ->route('users.index')
+        //     ->with('success', 'Usuário atualizado com sucesso!');
     }
 
     public function remove($id)
     {
         $user = User::find($id);
         $user->delete();
-        return redirect()
-            ->route('users.index')
-            ->with('success', 'Usuário atualizado com sucesso!');
+        $returnData = ['message' => 'Usuário removido com sucesso'];
+
+        return response()->json($returnData, 200);
+        // return redirect()
+        //     ->route('users.index')
+        //     ->with('success', 'Usuário atualizado com sucesso!');
     }
 
 }
